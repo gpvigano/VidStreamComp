@@ -279,9 +279,13 @@ namespace VidStreamComp
 
             try
             {
-                if (!string.IsNullOrEmpty(login))
+                bool loginDefined = !string.IsNullOrEmpty(login);
+                if (loginDefined)
                 {
-                    httpWebRequest.Credentials = new NetworkCredential(login, password);
+                    NetworkCredential credential = new NetworkCredential(login, password);
+                    CredentialCache credentialCache = new CredentialCache();
+                    credentialCache.Add(new Uri(url), "Basic", credential);
+                    httpWebRequest.Credentials = credentialCache;
                 }
                 // get response
                 webResponse = httpWebRequest.GetResponse();
