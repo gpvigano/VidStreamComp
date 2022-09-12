@@ -26,6 +26,9 @@ namespace VidStreamComp
         [Tooltip("Optional password required to access the IP camera")]
         [SerializeField]
         private string password = null;
+        [Tooltip("Authentication scheme required to access the IP camera")]
+        [SerializeField]
+        private string authentication = "Basic";
         [Tooltip("Restart on connection lost")]
         [SerializeField]
         private bool restartOnError = true;
@@ -284,7 +287,7 @@ namespace VidStreamComp
                 {
                     NetworkCredential credential = new NetworkCredential(login, password);
                     CredentialCache credentialCache = new CredentialCache();
-                    credentialCache.Add(new Uri(url), "Basic", credential);
+                    credentialCache.Add(new Uri(url), authentication, credential);
                     httpWebRequest.Credentials = credentialCache;
                 }
                 // get response
